@@ -1,0 +1,40 @@
+{
+  "expo": {
+    "name": "Codename: Last Chance",
+    "slug": "codenameLastChance",
+    "privacy": "public",
+    "sdkVersion": "36.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "version": "0.0.1",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "querymobile",
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.54239387189-8cmhkgjl7je6vv2d3938t3acr0g6ilbu"
+        }
+      }
+    },
+    "android": {
+      "package": "com.querymobile",
+      "googleServicesFile": "./google-services.json"
+    }
+  }
+}

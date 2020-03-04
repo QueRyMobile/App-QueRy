@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "54239387189",
+    "firebase_url": "https://teste-6b232.firebaseio.com",
+    "project_id": "teste-6b232",
+    "storage_bucket": "teste-6b232.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:54239387189:android:b4ddea7d869954a976db7c",
+        "android_client_info": {
+          "package_name": "com.querymobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "54239387189-55fib2gv37nkkl69g3m0pg3ph1isqsus.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfwGL1SCH2qe0ze1Es6ZOvJFEd1mvwH5o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "54239387189-55fib2gv37nkkl69g3m0pg3ph1isqsus.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
