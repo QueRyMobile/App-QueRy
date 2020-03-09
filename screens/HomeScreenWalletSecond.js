@@ -8,7 +8,9 @@ import {
   SafeAreaView,
   Dimensions,
   TouchableOpacity,
-  Image
+  Image,
+  ActivityIndicator,
+  FlatList
 } from "react-native";
 
 const cardHeight = 250;
@@ -83,24 +85,72 @@ class LogoTitle extends React.Component {
   }
 
 export default class HomeScreenWallet extends React.Component {
-  state = {
-    y: new Animated.Value(0)
-  };
+
+  constructor(props){
+    super(props)
+      this.state={items: []}
+  }
+
+  // state = {
+  //   y: new Animated.Value(0)
+  // };
+
+  componentDidMount(){
+    this.getDataFromFirebase()
+  }
+
+  getDataFromFirebase = async () => {
+    const endpoint = "https://jsonplaceholder.typicode.com/photos?_limit=20";
+    const res = await fetch(endpoint);
+    const data = await res.json();
+    this.setState({items: data})
+  }
+
+  _renderItem = ({item, index}) => {
+    let {cardText, card, cardImage} = styles;
+    return(
+      <TouchableOpacity style={card} onPress={()=> this.props.navigation.navigate("Profile")}>
+        <Image style={cardImage} source={{uri: item.url}}></Image>
+        <Text style={cardText}>{item.title}</Text>
+      </TouchableOpacity>
+    )
+  }
 
   render() {
 
     const { y } = this.state;
-    let { container, cardText, card, cardImage} = styles;
-
+    let { container,loader} = styles;
+    let {items} = this.state;
+    if(items.length === 0){
+      return(
+        <View style={loader}>
+          <ActivityIndicator size="large"></ActivityIndicator>
+        </View>
+      )
+    }
     return (
-      <View style={container}>
-        <ScrollView>
-        <TouchableOpacity style={card} onPress={()=> this.props.navigation.navigate("Profile")}>
-          <Image style={cardImage} source={{uri: "https://catracalivre.com.br/wp-content/thumbnails/9XyXYcezS4VsNWYRPM3orKbck6M=/wp-content/uploads/2019/12/kanye-west-aniversario-de-sp-450x225.jpg"}}></Image>
-          <Text style={cardText}>Kanye West</Text>
-        </TouchableOpacity>
-        </ScrollView>
-      </View>
+      <FlatList
+        style={container}
+        data={items}
+        keyExtractor={(item,index)=>index.toString()}
+        renderItem={this._renderItem}
+      />
+
+      // <View style={container}>
+      //   <ScrollView>
+      //   <TouchableOpacity style={card} onPress={()=> this.props.navigation.navigate("Profile")}>
+      //     <Image style={cardImage} source={{uri: "https://catracalivre.com.br/wp-content/thumbnails/9XyXYcezS4VsNWYRPM3orKbck6M=/wp-content/uploads/2019/12/kanye-west-aniversario-de-sp-450x225.jpg"}}></Image>
+      //     <Text style={cardText}>Kanye West</Text>
+      //   </TouchableOpacity>
+      //   </ScrollView>
+      // </View>
+
+
+
+
+
+
+
       // <SafeAreaView style={styles.root}>
       //   <View style={styles.container}>
       //     <View style={StyleSheet.absoluteFill}>
@@ -170,12 +220,13 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "#808080"
+    backgroundColor: "#FFF"
   },
   content: {
     height: height * 2
   },
   card: {
+    paddingTop: 20,
     height: cardHeight,
     borderRadius: 10
   },
@@ -201,14 +252,20 @@ const styles = StyleSheet.create({
     textAlign: "left"
   },
 
+  loader:{
+    flex:1,
+    alignItems: "center",
+    justifyContent: "center"
+  },
 
 
   card:{
     backgroundColor: "#000",
     marginBottom: 10,
+    borderRadius: 20,
     marginLeft: "2%",
     width: "96%",
-    shadowColor: '#FFF',
+    shadowColor: '#808080',
     shadowOpacity: 1,
     shadowOffset:{
       width:3,
@@ -221,6 +278,7 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   cardImage:{
+    borderRadius: 20,
     alignSelf:"center",
     width: 398,
     height: 200,
