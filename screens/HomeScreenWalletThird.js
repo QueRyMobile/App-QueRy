@@ -50,21 +50,25 @@ export default class HomeScreenWallet extends React.Component {
       this.state={items: []}
   }
   
-  getStuffFirebase = () => {}
+  getStuffFirebase(){
+    var userId = firebase.auth().currentUser.uid;
+    console.log("Esse aqui é: " + userId);
+
+  return firebase.database().ref(userId).once('value').then(function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
+        childSnapshot.forEach(function(colorSnapshot) {
+            console.log(childSnapshot.key+" - "+colorSnapshot.key+": "+colorSnapshot.val());
+            });
+            
+        });
+        
+    });
+
+  }
+
   
   componentDidMount(){
     this.getDataFromFirebase();
-
-    const user = "85WrgXkLa7dF5IUh6SKBMjr2JK62";
-
-    this.unsubscribe = Fire.shared.firestore
-        .collection("users")
-        .doc(user)
-        .onSnapshot(doc => {
-            this.setState({ user: doc.data() })
-        });   
-
-        console.log(user)
   }
 
   getDataFromFirebase = async () => {
