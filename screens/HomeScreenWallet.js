@@ -82,6 +82,11 @@ class LogoTitle extends React.Component {
     }
   }
 
+     // *************************************** \\
+//  ||                                           ||
+ // ||           Página fora de uso!             ||
+ // ||                                           ||
+ //  \\ *************************************** //
 export default class HomeScreenWallet extends React.Component {
   state = {
     y: new Animated.Value(0)

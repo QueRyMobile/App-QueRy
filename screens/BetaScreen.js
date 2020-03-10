@@ -38,12 +38,8 @@ export default class BetaScreen extends Component {
     unsubscribe = null;
 
     componentDidMount(props) {
-
-        // const user = "85WrgXkLa7dF5IUh6SKBMjr2JK62";
         const user = this.props.navigation.state.params.data;
-        // const dataScan = this.props.handleBarCodeScanned;
-        // const user = this.props.handleBarCodeScanned;
-        
+         
         this.unsubscribe = Fire.shared.firestore
         .collection("users")
         .doc(user)

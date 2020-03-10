@@ -12,56 +12,15 @@ import {
   ActivityIndicator,
   FlatList
 } from "react-native";
+import firebase from '../config'
+import Fire from '../Fire'
+import UserPermissions from '../utilities/UserPermissions'
+require ('firebase/firestore')
 
 const cardHeight = 250;
-const cardTitle = 45;
-const cardPadding = 10;
 
 const { height } = Dimensions.get("window");
-const cards = [
-  {
-    name: "Pedro Venturini",
-    color: "#a9d0b6",
-    price: "Co-Founder",
-    text: "Lorem Ipsum"
-  },
-  {
-    name: "Pedro Wagner",
-    color: "#e9bbd1",
-    price: "64 R$",
-    text: "Lorem Ipsum"
-  },
-  {
-    name: "ADICOM",
-    color: "#eba65c",
-    price: "80 R$",
-    text: "Lorem Ipsum"
-  },
-  {
-    name: "SH-TECH",
-    color: "#95c3e4",
-    price: "85 R$",
-    text: "Lorem Ipsum"
-  },
-  {
-    name: "Guilherme Zago",
-    color: "#1c1c1c",
-    price: "CEO",
-    text: "Lorem Ipsum"
-  },
-  {
-    name: "Mc Donalds",
-    color: "#a390bc",
-    price: "Standard",
-    text: "Lorem Ipsum"
-  },
-  {
-    name: "TECNOPUC",
-    color: "#fef2a0",
-    price: "PREMIUM",
-    text: "Lorem Ipsum"
-  }
-];
+
 
 class LogoTitle extends React.Component {
     render() {
@@ -86,17 +45,25 @@ class LogoTitle extends React.Component {
 
 export default class HomeScreenWallet extends React.Component {
 
+    
   constructor(props){
     super(props)
       this.state={items: []}
   }
 
-  // state = {
-  //   y: new Animated.Value(0)
-  // };
-
   componentDidMount(){
-    this.getDataFromFirebase()
+    this.getDataFromFirebase();
+
+    const user = "85WrgXkLa7dF5IUh6SKBMjr2JK62";
+
+    this.unsubscribe = Fire.shared.firestore
+        .collection("users")
+        .doc(user)
+        .onSnapshot(doc => {
+            this.setState({ user: doc.data() })
+        });   
+
+        console.log(user)
   }
 
   getDataFromFirebase = async () => {
@@ -106,7 +73,7 @@ export default class HomeScreenWallet extends React.Component {
     this.setState({items: data})
   }
 
-  _renderItem = ({item, index}) => {
+  _renderItem = ({item, index, user}) => {
     let {cardText, card, cardImage} = styles;
     return(
       <TouchableOpacity style={card} onPress={()=> this.props.navigation.navigate("Profile")}>
@@ -117,8 +84,7 @@ export default class HomeScreenWallet extends React.Component {
   }
 
   render() {
-
-    const { y } = this.state;
+    // const { y } = this.state;
     let { container,loader} = styles;
     let {items} = this.state;
     if(items.length === 0){
@@ -220,6 +186,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    paddingTop: 10,
     backgroundColor: "#FFF"
   },
   content: {
