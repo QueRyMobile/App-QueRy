@@ -7,22 +7,27 @@ import FirebaseKeys from './config'
     // firebase.initializeApp(config);
 
 class Fire{
-    addPost = async({text, localUri}) => {
-        const remoteUri = await this.uploadPhotoAsync(localUri,`photos/${this.uid}/${Date.now()}` )
+    connect = async(uid) => {
+        // const remoteUri = await this.uploadPhotoAsync(localUri,`photos/${this.uid}/${Date.now()}` )
 
-        return new Promise((res,rej)=>{
-            this.firestore.collection("posts")
-            .add({
-                text,
-                uid: this.uid,
+        // const path = `connections/${this.uid}` 
+        let db = this.firestore.collection("connections").doc(this.uid)
+
+        // return new Promise((res,rej)=>{
+            // this.firestore.collection("connections")
+            db
+            .set({
+                // text,
+                uid: uid,
                 timeStamp: this.timeStamp,
-                image: remoteUri
-            }).then(ref => {
-                res(ref)
-            }).catch(error => {
-                rej(error)
-            })
-        })
+                // image: remoteUri
+            }, {merge: true})
+            // .then(ref => {
+            //     res(ref)
+            // }).catch(error => {
+            //     rej(error)
+            // })
+        // })
     }
 
     uploadPhotoAsync = async (uri, filename) => {

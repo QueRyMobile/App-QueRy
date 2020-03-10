@@ -51,12 +51,6 @@ export default class ProfileScreen extends React.Component{
 
         console.log(user)
     }
-    
-    // abortController = new AbortController();
-
-    // componentWillMount(){
-    //     this.abortController.abort();
-    // }
 
     handlePickAvatar = async () => {
         UserPermissions.getCameraPermission()

@@ -10,6 +10,16 @@ require ('firebase/firestore')
 
 // const {data} = props.data;
 
+class LogoTitle extends React.Component {
+    render() {
+      return (
+        <Image
+          source={require('../assets/logoBeta3squared.png')}
+          style={{ width: 30, height: 30}}
+        />
+      );
+    }
+  }
 
 class RightButton extends React.Component {
     render() {
@@ -102,7 +112,7 @@ export default class BetaScreen extends Component {
          </View>
 
          <TouchableOpacity style={styles.button} onPress={() => this.saveContact()} >
-                    <Text style={{fontSize: 18, paddingRight: 10, paddingLeft: 10, color: "white"}}>Connect (Mudar)</Text>
+                    <Text style={{fontSize: 18, paddingRight: 10, paddingLeft: 10, color: "white"}}>Connect</Text>
                   </TouchableOpacity>
 
          <TouchableOpacity style={styles.button} onPress={() => {
@@ -184,8 +194,7 @@ export default class BetaScreen extends Component {
 
 BetaScreen.navigationOptions = ({
     // headerLeft: () => (<RightButton/>),
-    // headerTitle: <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><LogoTitle/></View>,
-    // // headerTitle: <LogoTitle/>,
+    headerTitle: <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><LogoTitle/></View>,
     headerRight: () => (<RightButton/>)
   });
 
