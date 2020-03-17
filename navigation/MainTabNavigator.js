@@ -18,6 +18,7 @@ import ProfileScreen from '../screens/ProfileScreenGama';
 import BaseScreen from '../screens/BaseScreen'
 import IDScreenScanner from '../screens/IDScreenDelta2';
 import IDScreenScannerWeb from '../screens/IDScreenDeltaWeb';
+import IDScreenScannerGallery from '../screens/IDScreenDeltaGallery';
 import EditProfile from '../screens/EditProfile';
 import BetaProfile from '../screens/BetaScreen';
 import MessageScreen from '../screens/MessageScreen';
@@ -69,6 +70,7 @@ const BaseScreenStack = createStackNavigator(
     Base: BaseScreen,
     Scanner: IDScreenScanner,
     ScannerWeb: IDScreenScannerWeb,
+    ScannerGallery: IDScreenScannerGallery,
     // ScannerRN: IDScreenScannerRN,
     Beta: BetaProfile,
   },

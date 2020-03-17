@@ -142,6 +142,12 @@ export default class PostScreen extends React.Component{
                             <TouchableOpacity style={styles.buttondnv} onPress={()=> this.props.navigation.navigate("ScannerWeb")}>
                             <Text style={{color:"#FFF", fontWeight: "700", fontSize: 20}}>Scan ID (Para Adesivos)!</Text>
                             </TouchableOpacity>
+
+                            {/* <TouchableOpacity style={styles.buttondnv} onPress={()=> this.props.navigation.navigate("ScannerGallery")}>
+                            <Text style={{color:"#FFF", fontWeight: "700", fontSize: 20}}>Scan De Galeria</Text>
+                            </TouchableOpacity> */}
+
+
                             {/* <TouchableOpacity style={styles.buttondnv} onPress={()=> this.props.navigation.navigate("Beta")}>
                             <Text style={{color:"#FFF", fontWeight: "700", fontSize: 20}}>Go to Beta</Text>
                             </TouchableOpacity> */}

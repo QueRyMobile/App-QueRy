@@ -50,54 +50,68 @@ export default class HomeScreenWallet extends React.Component {
       this.state={items: []}
   }
   
-  getStuffFirebase = () => {
+  getStuffFirebase = async (state, items) => {
+    
     var userId = firebase.auth().currentUser.uid;
     console.log("Esse aqui é: " + userId);
 
-   firebase.database().ref(userId).once('value').then(snapshot => {
-    snapshot.forEach(childSnapshot => {
-        childSnapshot.forEach(colorSnapshot => {
-            console.log(childSnapshot.key+" - "+colorSnapshot.key+": "+colorSnapshot.val());
-            this.setState({items: colorSnapshot.val()})
-            });
-            
+    firebase.database().ref(userId).once('value').then(snapshot => {
+     snapshot.forEach(childSnapshot => {
+       childSnapshot.forEach(colorSnapshot => {
+          // console.log("\n" + colorSnapshot.val());
+          // //  colorSnapshot.exportVal();
+          // console.log(childSnapshot.val());
+          console.log(colorSnapshot.val());
+          
+          // console.log("Json: " + colorSnapshot.toJSON());
+          // let data = colorSnapshot.val();
+          // console.log(data)
+
+         
+          this.setState({items: colorSnapshot.val()})
         });
         
+      });
+      
     });
-
+    // console.log("Estado: " + items);
+      // const res = await (endpoint)
+      // var data = colo
+      // this.setState({items: data})
+      // console.log("We here: " + items)
   }
 
   
   componentDidMount(){
     // this.getDataFromFirebase();
     this.getStuffFirebase();
+
+    // console.log("Eiei: "+ this.state)
   }
 
-//   getDataFromFirebase = async () => {
-//     const endpoint = "https://jsonplaceholder.typicode.com/photos?_limit=20";
-//     const res = await fetch(endpoint);
-//     const data = await res.json();
-//     this.setState({items: data})
-//   }
+  // getDataFromFirebase = async () => {
+  //   const endpoint = "https://jsonplaceholder.typicode.com/photos?_limit=20";
+  //   const res = await fetch(endpoint);
+  //   const data = await res.json();
+  //   this.setState({items: data})
+  // }
 
-//   _renderItem = ({item, index, user}) => {
-//     let {cardText, card, cardImage} = styles;
-//     return(
-//       <TouchableOpacity style={card} onPress={()=> this.props.navigation.navigate("Profile")}>
-//         <Image style={cardImage} source={{uri: item.url}}></Image>
-//         <Text style={cardText}>{item.title}</Text>
-//       </TouchableOpacity>
-//     )
-//   }
+  // _renderItem = ({item, index, user}) => {
+  //   let {cardText, card, cardImage} = styles;
+  //   return(
+  //     <TouchableOpacity style={card} onPress={()=> this.props.navigation.navigate("Profile")}>
+  //       <Image style={cardImage} source={{uri: item.url}}></Image>
+  //       <Text style={cardText}>{item.title}</Text>
+  //     </TouchableOpacity>
+  //   )
+  // }
 
-  _renderItem = ({item}) => {
+  _renderCard = ({item, index, user}) => {
     let {cardText, card, cardImage} = styles;
     return(
       <TouchableOpacity style={card} onPress={()=> this.props.navigation.navigate("Profile")}>
         {/* <Image style={cardImage} source={{uri: item.url}}></Image> */}
-        {/* <Text style={cardText}>{item.name}</Text> */}
-        {/* <Text style={cardText}>{console.log(item)}</Text> */}
-        <Text style={cardText}>{console.log(item)}</Text>
+        <Text style={cardText}>{}</Text>
       </TouchableOpacity>
     )
   }
@@ -106,21 +120,30 @@ export default class HomeScreenWallet extends React.Component {
     // const { y } = this.state;
     let { container,loader} = styles;
     let {items} = this.state;
-    if(items.length === 0){
-      return(
-        <View style={loader}>
-          <ActivityIndicator size="large"></ActivityIndicator>
-          <Text>Hello World</Text>
-        </View>
-      )
-    }
+    // console.log("Estes sao os items: " + items);
+    // if(items.length === 0){
+    //   return(
+    //     <View style={loader}>
+    //       <ActivityIndicator size="large"></ActivityIndicator>
+    //     </View>
+    //   )
+    // }
     return (
-      <FlatList
+    <View>
+      <Text>Teste</Text>
+       {/* <FlatList
         style={container}
-        data={items}
-        keyExtractor={(item,index)=>index.toString()}
-        renderItem={this._renderItem}
-      />
+        data={this.state}
+        keyExtractor={(items,index)=>index.toString()}
+        renderItem={this._renderCard}
+      /> */}
+    </View>
+      // <FlatList
+      //   style={container}
+      //   data={this.state}
+      //   keyExtractor={(item,index)=>index.toString()}
+      //   renderItem={this._renderCard}
+      // />
 
       // <View style={container}>
       //   <ScrollView>
