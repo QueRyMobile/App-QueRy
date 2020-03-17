@@ -69,6 +69,7 @@ export default class HomeScreenWallet extends React.Component {
   
   componentDidMount(){
     this.getDataFromFirebase();
+    this.getStuffFirebase();
   }
 
   getDataFromFirebase = async () => {
@@ -230,7 +231,6 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
 
-
   card:{
     backgroundColor: "#000",
     marginBottom: 10,
@@ -250,9 +250,11 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   cardImage:{
+    // paddingTop: 10,
     borderRadius: 20,
     alignSelf:"center",
-    width: 398,
+    width: "100%",
+    // marginLeft: "2%",
     height: 200,
     resizeMode: "cover"
   }
