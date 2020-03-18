@@ -59,6 +59,7 @@ export default class HomeScreenWallet extends React.Component {
         childSnapshot.forEach(colorSnapshot => {
             console.log(childSnapshot.key+" - "+colorSnapshot.key+": "+colorSnapshot.val());
             this.setState({items: colorSnapshot.val()})
+            console.log(this.state.items);
             });
             
         });
@@ -90,14 +91,14 @@ export default class HomeScreenWallet extends React.Component {
 //     )
 //   }
 
-  _renderItem = ({item}) => {
+  _renderItem = (items) => {
     let {cardText, card, cardImage} = styles;
     return(
-      <TouchableOpacity style={card} onPress={()=> this.props.navigation.navigate("Profile")}>
+      <TouchableOpacity style={card} onPress={()=> this.props.navigation.navigate("Beta", {data: this.state.items})}>
         {/* <Image style={cardImage} source={{uri: item.url}}></Image> */}
         {/* <Text style={cardText}>{item.name}</Text> */}
         {/* <Text style={cardText}>{console.log(item)}</Text> */}
-        <Text style={cardText}>{console.log(item)}</Text>
+        <Text style={cardText}>{this.state.items}</Text>
       </TouchableOpacity>
     )
   }
@@ -110,7 +111,7 @@ export default class HomeScreenWallet extends React.Component {
       return(
         <View style={loader}>
           <ActivityIndicator size="large"></ActivityIndicator>
-          <Text>Hello World</Text>
+          <Text>Você não possuí contatos!</Text>
         </View>
       )
     }
