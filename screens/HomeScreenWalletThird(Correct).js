@@ -17,7 +17,6 @@ import Fire from '../Fire'
 import UserPermissions from '../utilities/UserPermissions'
 require ('firebase/firestore')
 
-
 const cardHeight = 250;
 
 const { height } = Dimensions.get("window");
@@ -48,41 +47,19 @@ export default class HomeScreenWallet extends React.Component {
     
   constructor(props){
     super(props)
-      this.state={
-        user: {
-          name: "",
-          insta: "",
-          twitter: "",
-          whatsapp: "",
-          bio: "",
-        },
-      items: [],
-    } 
+      this.state={items: []}
   }
   
-  componentDidMount(props){
-    
-    
-    this.getStuffFirebase();
-    this.getUserInfo();
-
-    // console.log("\nThis is: " + this.state.user.toString())
-  }
-
   getStuffFirebase = () => {
     var userId = firebase.auth().currentUser.uid;
     console.log("Esse aqui é: " + userId);
 
-   firebase.database().ref(userId).once('value', snapshot => {
+   firebase.database().ref(userId).once('value').then(snapshot => {
     snapshot.forEach(childSnapshot => {
         childSnapshot.forEach(colorSnapshot => {
-            // console.log(childSnapshot.key+" - "+colorSnapshot.key+": "+colorSnapshot.val());
+            console.log(childSnapshot.key+" - "+colorSnapshot.key+": "+colorSnapshot.val());
             this.setState({items: colorSnapshot.val()})
-            // this.setState({user: this.state.items})
-
-            console.log("Items: " + this.state.items)
-            // console.log("User: " + this.state.user)
-            // console.log(this.state.items);
+            console.log(this.state.items);
             });
             
         });
@@ -91,23 +68,24 @@ export default class HomeScreenWallet extends React.Component {
 
   }
 
+  // getStuffFromFirestore = () => {
+  //   Fire.shared.firestore.collection("users").doc(this.state.items).onSnapshot(doc => {
+  //           this.setState({ user: doc.data() })
+  //         })
+  // }
+
   
-
-  getUserInfo = async() => {
-    const user = "ysTT7dpbaTTUStbuNsoRvCnA2ao1";
-
-    // const user = this.state.items;
-
-
-    // this.state.user = this.state.items;
-    // console.log(Ruser)
-    // 
-    Fire.shared.firestore.collection("users").doc(user).onSnapshot(doc =>{this.setState({user: doc.data()})} )
-    // .onSnapshot(doc => this.setState({user: doc.data()}));
-    
-    // console.log("Test2:" + Ruser);
+  componentDidMount(){
+    // this.getDataFromFirebase();
+    this.getStuffFirebase();
   }
-  
+
+//   getDataFromFirebase = async () => {
+//     const endpoint = "https://jsonplaceholder.typicode.com/photos?_limit=20";
+//     const res = await fetch(endpoint);
+//     const data = await res.json();
+//     this.setState({items: data})
+//   }
 
 //   _renderItem = ({item, index, user}) => {
 //     let {cardText, card, cardImage} = styles;
@@ -119,77 +97,106 @@ export default class HomeScreenWallet extends React.Component {
 //     )
 //   }
 
-  // _renderItem = ({items, user}) => {
-  //   let {cardText, card, cardImage} = styles;
-  //   return(
-  //     <TouchableOpacity style={card} onPress={()=> this.props.navigation.navigate("Beta", {data: this.state.items})}>
-  //       {/* <Image style={cardImage} source={{uri: item.url}}></Image> */}
-  //       {/* <Text style={cardText}>{item.name}</Text> */}
-  //       {/* <Text style={cardText}>{console.log(item)}</Text> */}
-  //       {/* <Text style={cardText}>{this.state.items}</Text> */}
-  //       {/* <Text style={cardText}>{this.state.items}</Text> */}
-  //       <Text style={cardText}>{this.state.items}</Text>
-  //       {/* <Text style={cardText}>{this.state.items.data}</Text> */}
-  //     </TouchableOpacity>
-  //   )
-  // }
-
-  _renderUser = () => {
-    let {cardName, card, cardBio, cardImage} = styles;
+  _renderItem = (items) => {
+    let {cardText, card, cardImage} = styles;
     return(
       <TouchableOpacity style={card} onPress={()=> this.props.navigation.navigate("Beta", {data: this.state.items})}>
-      {/* <Text style={BigText}>A + {console.log("This is the user u r looking 4: " + this.state.toString())}</Text> */}
-      <Image style={cardImage}
-            source={
-                this.state.user.avatar
-                    ? { uri: this.state.user.avatar } :
-                  require("../assets/images/robot-dev.png")
-            }
-            style={styles.cardImage}
-            />
         {/* <Image style={cardImage} source={{uri: item.url}}></Image> */}
         {/* <Text style={cardText}>{item.name}</Text> */}
         {/* <Text style={cardText}>{console.log(item)}</Text> */}
-        {/* <Text style={cardText}>{this.state.items}</Text> */}
-
-
-        {/* <Text style={cardText}>A + {this.state.items}</Text> */}
-        
-        <Text style={cardName}>{this.state.user.name}</Text>
-        <Text style={cardBio}>{this.state.user.bio}</Text>
-        
-        {/* <Text style={cardText}>{this.state.items}</Text> */}
-        
-
-        {/* <Text style={cardText}>A + {this.state.user.bio}</Text> */}
-        {/* <Text style={cardText}>{this.state.user.name}</Text> */}
-        {/* <Text>{this.state.user.name}</Text> */}
-        {/* <Text style={cardText}>{this.state.items.data}</Text> */}
+        <Text style={cardText}>{this.state.items}</Text>
+        <Text style={cardText}>{this.state.items.data}</Text>
       </TouchableOpacity>
     )
   }
 
   render() {
     // const { y } = this.state;
-    const user = this.state.items;
     let { container,loader} = styles;
     let {items} = this.state;
     if(items.length === 0){
       return(
         <View style={loader}>
           <ActivityIndicator size="large"></ActivityIndicator>
-          <Text>Você não possui contatos!</Text>
+          <Text>Você não possuí contatos!</Text>
         </View>
       )
     }
     return (
       <FlatList
-          style={container}
-          data={items}
-          keyExtractor={(item,index)=>index.toString()}
-          renderItem={this._renderUser}
-        />
-   
+        style={container}
+        data={items}
+        keyExtractor={(item,index)=>index.toString()}
+        renderItem={this._renderItem}
+      />
+
+      // <View style={container}>
+      //   <ScrollView>
+      //   <TouchableOpacity style={card} onPress={()=> this.props.navigation.navigate("Profile")}>
+      //     <Image style={cardImage} source={{uri: "https://catracalivre.com.br/wp-content/thumbnails/9XyXYcezS4VsNWYRPM3orKbck6M=/wp-content/uploads/2019/12/kanye-west-aniversario-de-sp-450x225.jpg"}}></Image>
+      //     <Text style={cardText}>Kanye West</Text>
+      //   </TouchableOpacity>
+      //   </ScrollView>
+      // </View>
+
+
+
+
+
+
+
+      // <SafeAreaView style={styles.root}>
+      //   <View style={styles.container}>
+      //     <View style={StyleSheet.absoluteFill}>
+      //       {cards.map((card, i) => {
+      //         const inputRange = [-cardHeight, 0];
+      //         const outputRange = [
+      //           cardHeight * i,
+      //           (cardHeight - cardTitle) * -i
+      //         ];
+      //         if (i > 0) {
+      //           inputRange.push(cardPadding * i);
+      //           outputRange.push((cardHeight - cardPadding) * -i);
+      //         }
+      //         const translateY = y.interpolate({
+      //           inputRange,
+      //           outputRange,
+      //           extrapolateRight: "clamp"
+      //         });
+      //         return (
+      //           <Animated.View
+      //             key={card.name}
+      //             style={{ transform: [{ translateY }] }}
+      //           >
+      //             <View style={[styles.card, { backgroundColor: card.color }]}>
+      //                 <View style={styles.viewtest}>
+      //                   <Text style={styles.name}>{card.name}</Text>
+      //                   <Text style={styles.price}>{card.price}</Text>
+      //               </View>
+      //                   <Text style={styles.text}>{card.text}</Text>
+      //             </View>
+                  
+      //           </Animated.View>
+      //         );
+      //       })}
+      //     </View>
+      //     <Animated.ScrollView
+      //       scrollEventThrottle={16}
+      //       contentContainerStyle={styles.content}
+      //       showsVerticalScrollIndicator={false}
+      //       onScroll={Animated.event(
+      //         [
+      //           {
+      //             nativeEvent: {
+      //               contentOffset: { y }
+      //             }
+      //           }
+      //         ],
+      //         { useNativeDriver: true }
+      //       )}
+      //     />
+      //   </View>
+      // </SafeAreaView>
     );
   }
 }
@@ -259,26 +266,18 @@ const styles = StyleSheet.create({
       height: 3
     }
   },
-  cardName:{
-    fontSize: 40,
-    fontWeight: "600",
+  cardText:{
+    fontSize: 30,
     color:"#FFF",
     textAlign: "center"
   },
-  cardBio:{
-    fontSize: 20,
-    fontWeight: "300",
-    color: "#FFF",
-    textAlign: "center"
-  },
-
   cardImage:{
     // paddingTop: 10,
     borderRadius: 20,
     alignSelf:"center",
     width: "100%",
     // marginLeft: "2%",
-    height: 300,
+    height: 200,
     resizeMode: "cover"
   }
 });

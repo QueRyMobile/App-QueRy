@@ -30,6 +30,9 @@ class Fire{
         // })
     }
 
+    
+    
+
     uploadPhotoAsync = async (uri, filename) => {
         // const path = `${this.uid}/images/${filename}.jpg` 
 
@@ -47,9 +50,9 @@ class Fire{
         })    
     };
 
-    getConnections = async user => {
+    // getConnections = async user => {
         
-    }
+    // }
     
     createUser = async user => {
         let remoteUri = null
