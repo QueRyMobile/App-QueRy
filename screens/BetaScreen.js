@@ -66,9 +66,9 @@ export default class BetaScreen extends Component {
 
         const local = firebase.database().ref(localuid);
  
-        local.push({
-            data: this.props.navigation.state.params.data,
-        })
+        local.push([
+             this.props.navigation.state.params.data,
+        ])
     }
 
     render() {

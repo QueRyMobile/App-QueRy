@@ -8,7 +8,9 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import HomeScreenWallet from '../screens/HomeScreenWallet';
 import HomeScreenWalletSecond from '../screens/HomeScreenWalletSecond';
-import HomeScreenWalletThird from '../screens/HomeScreenWalletThird';
+import HomeScreenWalletCorrect from '../screens/HomeScreenWalletThird(Correct)';
+import HomeScreenWalletThird from '../screens/HomeScreenWallet3.1';
+import HomeScreenWallet4 from '../screens/HomeScreenWallet4.0';
 import LoginScreenWeb from '../screens/WebLoginScreen';
 import RegisterScreenWeb from '../screens/WebRegisterScreen';
 import NotificationScreen from '../screens/NotificationScreen';
@@ -34,7 +36,7 @@ const config = Platform.select({
 
 const HomeStack = createStackNavigator(
   {
-    Home: HomeScreenWalletThird,
+    Home: HomeScreenWallet4,
   },
   config
 );

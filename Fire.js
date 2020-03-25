@@ -7,6 +7,7 @@ import FirebaseKeys from './config'
     // firebase.initializeApp(config);
 
 class Fire{
+
     connect = async(uid) => {
         // const remoteUri = await this.uploadPhotoAsync(localUri,`photos/${this.uid}/${Date.now()}` )
 
@@ -29,9 +30,6 @@ class Fire{
             // })
         // })
     }
-
-    
-    
 
     uploadPhotoAsync = async (uri, filename) => {
         // const path = `${this.uid}/images/${filename}.jpg` 

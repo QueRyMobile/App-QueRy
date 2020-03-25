@@ -56,124 +56,102 @@ export default class HomeScreenWallet extends React.Component {
           whatsapp: "",
           bio: "",
         },
-      items: [],
+        items: [],
     } 
   }
   
-  componentDidMount(props){
-    
+  componentDidMount(){
     
     this.getStuffFirebase();
+    this.testArrayFirebase();
     this.getUserInfo();
 
-    // console.log("\nThis is: " + this.state.user.toString())
+  }
+
+   testArray() {
+    return  {
+      data:{
+       test:[
+        {name: "Zago",
+        insta: "@zagoguic",
+        twitter: "@zagoguic",
+        whatsapp: "ta",
+        bio: "@zagoguic",},
+
+        {name: "Renan",
+        insta: "@renan",
+        twitter: "@renan",
+        whatsapp: "ta",
+        bio: "@renan",},
+       ]
+      },
+      status: "live"
+    }
   }
 
   getStuffFirebase = () => {
     var userId = firebase.auth().currentUser.uid;
-    console.log("Esse aqui é: " + userId);
 
-   firebase.database().ref(userId).once('value', snapshot => {
+   firebase.database().ref(userId).on('value', snapshot => {
     snapshot.forEach(childSnapshot => {
         childSnapshot.forEach(colorSnapshot => {
             // console.log(childSnapshot.key+" - "+colorSnapshot.key+": "+colorSnapshot.val());
             this.setState({items: colorSnapshot.val()})
-            // this.setState({user: this.state.items})
-
-            console.log("Items: " + this.state.items)
-            // console.log("User: " + this.state.user)
-            // console.log(this.state.items);
+            // console.log(this.state.items)
+            console.log(colorSnapshot.val())
             });
             
         });
         
     });
-
   }
 
-  
+  testArrayFirebase(){
+    
+    const userArray = this.state.items;
+    // console.log(this.state.items);
+    const BigDeal = userArray.slice.call(userArray);
+    console.log("Array de users: "+ BigDeal)
+
+    console.log(this.state.user);
+  }
 
   getUserInfo = async() => {
-    const user = "ysTT7dpbaTTUStbuNsoRvCnA2ao1";
+    const user = "85WrgXkLa7dF5IUh6SKBMjr2JK62";
 
-    // const user = this.state.items;
-
-
-    // this.state.user = this.state.items;
-    // console.log(Ruser)
-    // 
-    Fire.shared.firestore.collection("users").doc(user).onSnapshot(doc =>{this.setState({user: doc.data()})} )
-    // .onSnapshot(doc => this.setState({user: doc.data()}));
-    
-    // console.log("Test2:" + Ruser);
+    Fire.shared.firestore.collection("users").doc(user).onSnapshot(doc =>{this.setState({user: doc.data()})})
   }
+
   
-
-//   _renderItem = ({item, index, user}) => {
-//     let {cardText, card, cardImage} = styles;
-//     return(
-//       <TouchableOpacity style={card} onPress={()=> this.props.navigation.navigate("Profile")}>
-//         <Image style={cardImage} source={{uri: item.url}}></Image>
-//         <Text style={cardText}>{item.title}</Text>
-//       </TouchableOpacity>
-//     )
-//   }
-
-  // _renderItem = ({items, user}) => {
-  //   let {cardText, card, cardImage} = styles;
-  //   return(
-  //     <TouchableOpacity style={card} onPress={()=> this.props.navigation.navigate("Beta", {data: this.state.items})}>
-  //       {/* <Image style={cardImage} source={{uri: item.url}}></Image> */}
-  //       {/* <Text style={cardText}>{item.name}</Text> */}
-  //       {/* <Text style={cardText}>{console.log(item)}</Text> */}
-  //       {/* <Text style={cardText}>{this.state.items}</Text> */}
-  //       {/* <Text style={cardText}>{this.state.items}</Text> */}
-  //       <Text style={cardText}>{this.state.items}</Text>
-  //       {/* <Text style={cardText}>{this.state.items.data}</Text> */}
-  //     </TouchableOpacity>
-  //   )
-  // }
 
   _renderUser = () => {
     let {cardName, card, cardBio, cardImage} = styles;
+    // const {data:{test:[item1]}} = this.testArray();
+   
     return(
+     
       <TouchableOpacity style={card} onPress={()=> this.props.navigation.navigate("Beta", {data: this.state.items})}>
-      {/* <Text style={BigText}>A + {console.log("This is the user u r looking 4: " + this.state.toString())}</Text> */}
       <Image style={cardImage}
-            source={
-                this.state.user.avatar
+            source={ this.state.user.avatar
                     ? { uri: this.state.user.avatar } :
-                  require("../assets/images/robot-dev.png")
-            }
-            style={styles.cardImage}
-            />
-        {/* <Image style={cardImage} source={{uri: item.url}}></Image> */}
-        {/* <Text style={cardText}>{item.name}</Text> */}
-        {/* <Text style={cardText}>{console.log(item)}</Text> */}
-        {/* <Text style={cardText}>{this.state.items}</Text> */}
-
-
-        {/* <Text style={cardText}>A + {this.state.items}</Text> */}
-        
+                  require("../assets/images/robot-dev.png")} style={styles.cardImage}/>
         <Text style={cardName}>{this.state.user.name}</Text>
         <Text style={cardBio}>{this.state.user.bio}</Text>
-        
-        {/* <Text style={cardText}>{this.state.items}</Text> */}
-        
-
-        {/* <Text style={cardText}>A + {this.state.user.bio}</Text> */}
-        {/* <Text style={cardText}>{this.state.user.name}</Text> */}
-        {/* <Text>{this.state.user.name}</Text> */}
-        {/* <Text style={cardText}>{this.state.items.data}</Text> */}
       </TouchableOpacity>
+
     )
   }
 
   render() {
-    // const { y } = this.state;
-    const user = this.state.items;
-    let { container,loader} = styles;
-    let {items} = this.state;
+  // console.log("This is state: " + this.state.items)
+  // console.log("This is user: " + this.state.user.name)
+    let {cardName, card, cardBio, cardImage} = styles;
+    let {container,loader} = styles;
+    const {items} = this.state;
+    // const {data:{test: []}} = this.testArray();
+    const alo = this.testArray();
+    const testArr = this.testArrayFirebase();
+    // console.log(testArr)
     if(items.length === 0){
       return(
         <View style={loader}>
@@ -183,13 +161,24 @@ export default class HomeScreenWallet extends React.Component {
       )
     }
     return (
+      <ScrollView>
+        {alo.data.test.map((item,key)=>{
+         return( <TouchableOpacity key={key} style={card} onPress={()=> this.props.navigation.navigate("Beta", {data: this.state.items})}>
+          {/* <Image style={cardImage}
+                source={ this.state.user.avatar
+                        ? { uri: this.state.user.avatar } :
+                      require("../assets/images/robot-dev.png")} style={styles.cardImage}/> */}
+            <Text style={cardName}>{item.name}</Text>
+            <Text style={cardBio}>{item.bio}</Text>
+          </TouchableOpacity>)
+        })}
       <FlatList
           style={container}
           data={items}
           keyExtractor={(item,index)=>index.toString()}
           renderItem={this._renderUser}
         />
-   
+  </ScrollView>
     );
   }
 }
