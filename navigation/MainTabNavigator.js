@@ -11,6 +11,7 @@ import HomeScreenWalletSecond from '../screens/HomeScreenWalletSecond';
 import HomeScreenWalletCorrect from '../screens/HomeScreenWalletThird(Correct)';
 import HomeScreenWalletThird from '../screens/HomeScreenWallet3.1';
 import HomeScreenWallet4 from '../screens/HomeScreenWallet4.0';
+import HomeScreenWallet5 from '../screens/HomeScreenWallet5.0';
 import LoginScreenWeb from '../screens/WebLoginScreen';
 import RegisterScreenWeb from '../screens/WebRegisterScreen';
 import NotificationScreen from '../screens/NotificationScreen';
@@ -36,7 +37,7 @@ const config = Platform.select({
 
 const HomeStack = createStackNavigator(
   {
-    Home: HomeScreenWallet4,
+    Home: HomeScreenWallet5,
   },
   config
 );
